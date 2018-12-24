@@ -1,0 +1,38 @@
+{
+  "extends": [
+    "standard",
+    "plugin:flowtype/recommended",
+    "plugin:react/recommended",
+    "plugin:unicorn/recommended",
+    "prettier",
+    "prettier/flowtype",
+    "prettier/react",
+    "prettier/standard",
+    "prettier/unicorn"
+  ],
+  "plugins": [
+    "flowtype",
+    "react",
+    "prettier",
+    "standard",
+    "unicorn"
+  ],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "settings": {
+    "react": {
+      "version": "latest"
+    }
+  },
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "rules": {
+    "unicorn/filename-case": [0]
+  }
+}
