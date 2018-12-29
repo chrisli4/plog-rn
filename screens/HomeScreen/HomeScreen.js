@@ -1,12 +1,30 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FlatList, View } from 'react-native';
+import { FlatList } from 'react-native';
+import ModalScreen from '../ModalScreen';
+import { Screen } from '../../components/Container';
 import { PlantCard } from '../../components/Card';
+import { PlantForm } from '../../components/Form';
+import { Modal } from '../../components/Modal';
+import { DeleteButton } from '../../components/Button';
 import FabGroup from '../../containers/FabGroup';
-import { makeGetVisiblePlants, makeGetDeleteIds, makeGetRemoveStatus } from './selectors';
-import { addPlant, deletePlant, editPlant, selectPlant } from '../../actions/plants';
-import { addRemovePlant, deleteRemovePlant } from '../../actions/remove';
+import {
+  makeGetVisiblePlants,
+  makeGetDeleteIds,
+  makeGetRemoveStatus,
+} from './selectors';
+import {
+  addPlant,
+  deletePlant,
+  editPlant,
+  selectPlant,
+} from '../../actions/plants';
+import {
+  addRemovePlant,
+  deleteRemovePlant,
+  disableRemove,
+} from '../../actions/remove';
 
 class HomeScreen extends Component {
   state = {
@@ -21,7 +39,16 @@ class HomeScreen extends Component {
     });
   };
 
-  onClose = () => {
+  onEdit = plant => {
+    const { editPlant } = this.props;
+    editPlant(plant);
+    this.setState({
+      plant: {},
+      editVisible: false,
+    });
+  };
+
+  onDismiss = () => {
     this.setState({
       editVisible: false,
     });
@@ -34,25 +61,29 @@ class HomeScreen extends Component {
     } else {
       addRemovePlant(id);
     }
-  }
+  };
 
   onNavigate = plant => {
-    const { navigation, selectPlant } = this.props;
+    const { navigation, selectPlant, disableRemove } = this.props;
     selectPlant(plant);
+    disableRemove();
     navigation.navigate('Tabs', { title: plant.name });
-  }
+  };
 
   render() {
-    const { plants, editing } = this.props;
+    const { plants, editing, deleteIds, deletePlant } = this.props;
+    const { plant, editVisible } = this.state;
     return (
-      <View>
+      <Screen>
         <FlatList
+          style={{ flex: 1 }}
           data={plants}
           keyExtractor={item => item.id}
           extraData={this.props}
           renderItem={({ item }) => (
-            <PlantCard 
+            <PlantCard
               plant={item}
+              selected={deleteIds.indexOf(item.id) > -1}
               editing={editing}
               onEdit={this.onOpenEdit}
               onRemove={this.onRemove}
@@ -61,8 +92,19 @@ class HomeScreen extends Component {
           )}
           showsVerticalScrollIndicator={false}
         />
+        {editing && deleteIds.length > 0 && (
+          <DeleteButton onPress={deletePlant} />
+        )}
+        <Modal visible={editVisible} onDismiss={this.onDismiss}>
+          <PlantForm
+            plant={plant}
+            onAction={this.onEdit}
+            onDismiss={this.onDismiss}
+          />
+        </Modal>
+        <ModalScreen />
         <FabGroup />
-      </View>
+      </Screen>
     );
   }
 }
@@ -74,7 +116,7 @@ const makeMapStateToProps = () => {
   const mapStateToProps = state => ({
     plants: getVisiblePlants(state),
     deleteIds: getDeleteIds(state),
-    editing: getRemoveStatus(state), 
+    editing: getRemoveStatus(state),
   });
   return mapStateToProps;
 };
@@ -84,6 +126,7 @@ const mapDispatchToProps = {
   deletePlant,
   editPlant,
   selectPlant,
+  disableRemove,
   addRemovePlant,
   deleteRemovePlant,
 };
@@ -92,13 +135,13 @@ HomeScreen.propTypes = {
   plants: PropTypes.array.isRequired,
   editing: PropTypes.bool.isRequired,
   deleteIds: PropTypes.array.isRequired,
-  addPlant: PropTypes.func.isRequired,
   addRemovePlant: PropTypes.func.isRequired,
   deletePlant: PropTypes.func.isRequired,
   deleteRemovePlant: PropTypes.func.isRequired,
   editPlant: PropTypes.func.isRequired,
   selectPlant: PropTypes.func.isRequired,
   navigation: PropTypes.object.isRequired,
+  disableRemove: PropTypes.func.isRequired,
 };
 
 export default connect(

@@ -1,4 +1,4 @@
-import { NavigationActions, StackActions } from "react-navigation";
+import { NavigationActions, StackActions } from 'react-navigation';
 
 /**
  * The navigation is implemented as a service so that it can be used outside of components, for example in sagas.

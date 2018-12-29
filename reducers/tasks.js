@@ -1,4 +1,4 @@
-import { handleActions } from "redux-actions";
+import { handleActions } from 'redux-actions';
 import * as types from '../constants/tasks';
 import { addItem, deleteItems, editItem, deleteProps } from '../utils/reducers';
 import initData from '../data/task';
@@ -15,11 +15,15 @@ const reducer = handleActions(
       },
     }),
 
-    [types.TASK_DELETE_OBJ]: (state, action) => deleteProps(state, action.payload.pids),
+    [types.TASK_DELETE_OBJ]: (state, action) =>
+      deleteProps(state, action.payload.pids),
 
     [types.TASK_ADD_SUCCESS]: (state, action) => ({
       ...state,
-      [action.payload.pid]: addItem(state[action.payload.pid], action.payload.task),
+      [action.payload.pid]: addItem(
+        state[action.payload.pid],
+        action.payload.task
+      ),
     }),
 
     [types.TASK_ADD_FAILURE]: (state, action) => ({
@@ -29,7 +33,10 @@ const reducer = handleActions(
 
     [types.TASK_DELETE_SUCCESS]: (state, action) => ({
       ...state,
-      [action.payload.pid]: deleteItems(state[action.payload.pid], action.payload.ids),
+      [action.payload.pid]: deleteItems(
+        state[action.payload.pid],
+        action.payload.ids
+      ),
     }),
 
     [types.TASK_DELETE_FAILURE]: (state, action) => ({
@@ -38,7 +45,10 @@ const reducer = handleActions(
     }),
     [types.TASK_EDIT_SUCCESS]: (state, action) => ({
       ...state,
-      [action.payload.pid]: editItem(state[action.payload.pid], action.payload.task),
+      [action.payload.pid]: editItem(
+        state[action.payload.pid],
+        action.payload.task
+      ),
     }),
 
     [types.TASK_EDIT_FAILURE]: (state, action) => ({

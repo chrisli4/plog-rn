@@ -1,38 +1,19 @@
 {
-  "extends": [
-    "standard",
-    "plugin:flowtype/recommended",
-    "plugin:react/recommended",
-    "plugin:unicorn/recommended",
-    "prettier",
-    "prettier/flowtype",
-    "prettier/react",
-    "prettier/standard",
-    "prettier/unicorn"
-  ],
-  "plugins": [
-    "flowtype",
-    "react",
-    "prettier",
-    "standard",
-    "unicorn"
-  ],
-  "parserOptions": {
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
-    }
-  },
-  "settings": {
-    "react": {
-      "version": "latest"
-    }
-  },
-  "env": {
-    "es6": true,
-    "node": true
-  },
+  "extends": ["airbnb", "plugin:prettier/recommended"],
+  "plugins": ["prettier"],
   "rules": {
-    "unicorn/filename-case": [0]
-  }
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".js", ".jsx"]
+      }
+    ],
+    "react/prop-types": [1],
+    "no-underscore-dangle": 0,
+    "import/newline-after-import": "error",
+    "react/forbid-prop-types": 0,
+    "no-shadow": 0,
+    "import/prefer-default-export": 0
+  },
+  "parser": "babel-eslint"
 }

@@ -1,31 +1,48 @@
-import { all, put, call, select, takeEvery } from 'redux-saga/effects'; 
+import { all, put, call, select, takeEvery } from 'redux-saga/effects';
 import { Permissions, ImagePicker, FileSystem } from 'expo';
 import moment from 'moment';
 import shortid from 'shortid';
 import { PLANT_ADD, PLANT_DELETE, PLANT_EDIT } from '../constants/plants';
-import { addPlantSuccess, addPlantFailure, deletePlantSuccess, deletePlantFailure, editPlantSuccess, editPlantFailure } from '../actions/plants';
+import { disableRemove } from '../actions/remove';
+import { openModalPlant } from '../actions/modals';
+import {
+  addPlantSuccess,
+  addPlantFailure,
+  deletePlantSuccess,
+  deletePlantFailure,
+  editPlantSuccess,
+  editPlantFailure,
+} from '../actions/plants';
 
-const path = `${FileSystem.documentDirectory}plog`; 
+const path = `${FileSystem.documentDirectory}plog`;
 
 function* addPlantSaga() {
   try {
-    const { status } = yield call([Permissions, 'askAsync'], Permissions.CAMERA, Permissions.CAMERA_ROLL);
+    const { status } = yield call(
+      [Permissions, 'askAsync'],
+      Permissions.CAMERA,
+      Permissions.CAMERA_ROLL
+    );
 
     if (status === 'granted') {
-      let result = yield call([ImagePicker, 'launchCameraAsync'], { allowsEditing: true, aspect: [4, 3] });
+      const result = yield call([ImagePicker, 'launchCameraAsync'], {
+        allowsEditing: true,
+        aspect: [4, 3],
+      });
 
       if (!result.cancelled) {
         const id = shortid.generate();
         const uri = `${path}/${id}.png`;
-        yield call([FileSystem, 'copyAsync'], { from: result.uri, to: uri})
-        yield put(addPlantSuccess({
+        yield call([FileSystem, 'copyAsync'], { from: result.uri, to: uri });
+
+        const plant = {
           id,
           uri,
           date: moment().format('YYYY-MM-DD'),
-          name: '',
-          species: '',
-          genus: '', 
-        }))
+          name: 'Plant',
+        };
+        yield put(addPlantSuccess(plant));
+        yield put(openModalPlant(plant));
       }
     }
   } catch (error) {
@@ -36,8 +53,15 @@ function* addPlantSaga() {
 function* deletePlantSaga() {
   try {
     const ids = yield select(state => state.remove.plants);
-    yield all(ids.map(id => call([FileSystem, 'deleteAsync'], `${path}/${id}.png`, { idempotent: true })));
+    yield all(
+      ids.map(id =>
+        call([FileSystem, 'deleteAsync'], `${path}/${id}.png`, {
+          idempotent: true,
+        })
+      )
+    );
     yield put(deletePlantSuccess(ids));
+    yield put(disableRemove());
   } catch (error) {
     yield put(deletePlantFailure(error));
   }
@@ -57,5 +81,5 @@ export default function* watchPlants() {
     takeEvery(PLANT_ADD, addPlantSaga),
     takeEvery(PLANT_DELETE, deletePlantSaga),
     takeEvery(PLANT_EDIT, editPlantSaga),
-  ])
+  ]);
 }

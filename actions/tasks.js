@@ -1,5 +1,5 @@
-import { createAction } from "redux-actions";
-import * as types from "../constants/tasks";
+import { createAction } from 'redux-actions';
+import * as types from '../constants/tasks';
 
 export const addTaskObj = createAction(types.TASK_ADD_OBJ, pid => ({
   pid,
@@ -7,7 +7,7 @@ export const addTaskObj = createAction(types.TASK_ADD_OBJ, pid => ({
 
 export const deleteTaskObj = createAction(types.TASK_DELETE_OBJ, pids => ({
   pids,
-}))
+}));
 
 export const addTask = createAction(types.TASK_ADD, (pid, task) => ({
   pid,
@@ -55,4 +55,3 @@ export const editTaskSuccess = createAction(
 export const editTaskFailure = createAction(types.TASK_EDIT_FAILURE, error => ({
   error,
 }));
-

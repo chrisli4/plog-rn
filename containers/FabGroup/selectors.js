@@ -10,7 +10,7 @@ export const makeGetSelected = () =>
     selected => selected
   );
 
-export const makeGetScreen = () => 
+export const makeGetScreen = () =>
   createSelector(
     [getScreen],
     screen => screen

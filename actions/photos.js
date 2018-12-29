@@ -1,5 +1,5 @@
-import { createAction } from "redux-actions";
-import * as types from "../constants/photos";
+import { createAction } from 'redux-actions';
+import * as types from '../constants/photos';
 
 export const addPhotoObj = createAction(types.PHOTO_ADD_OBJ, pid => ({
   pid,
@@ -7,7 +7,7 @@ export const addPhotoObj = createAction(types.PHOTO_ADD_OBJ, pid => ({
 
 export const deletePhotoObj = createAction(types.PHOTO_DELETE_OBJ, pids => ({
   pids,
-}))
+}));
 
 export const addPhoto = createAction(types.PHOTO_ADD, pid => ({
   pid,

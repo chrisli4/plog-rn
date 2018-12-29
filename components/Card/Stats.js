@@ -6,26 +6,18 @@ import Stat from './Stat';
 import styles from './styles';
 
 const Stats = ({ height, length, width, temp, onPress }) => (
-        <TouchableRipple style={{ flex: 1 }} onPress={onPress}>
-          <View style={styles.stats}>
-            <Stat 
-              title={height}
-              caption="HEIGHT"
-            />
-            <Stat 
-              title={length}
-              caption="LENGTH"
-            />
-            <Stat 
-              title={width}
-              caption="WIDTH"
-            />
-            <Stat 
-              title={temp}
-              caption="TEMP"
-            />
-          </View>
-          </TouchableRipple>
+  <TouchableRipple
+    style={styles.touchableTop}
+    onPress={onPress}
+    rippleColor="rgba(0, 0, 0, .32)"
+  >
+    <View style={styles.stats}>
+      <Stat title={height} caption="HEIGHT" />
+      <Stat title={length} caption="LENGTH" />
+      <Stat title={width} caption="WIDTH" />
+      <Stat title={temp} caption="TEMP" />
+    </View>
+  </TouchableRipple>
 );
 
 Stats.propTypes = {

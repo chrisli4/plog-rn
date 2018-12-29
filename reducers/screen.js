@@ -1,9 +1,9 @@
-import { handleActions } from "redux-actions";
+import { handleActions } from 'redux-actions';
 import * as types from '../constants/screen';
 
 const init = {
   current: 'Home',
-}
+};
 
 const reducer = handleActions(
   {
@@ -15,7 +15,7 @@ const reducer = handleActions(
     [types.SCREEN_CLEAR_CURRENT]: () => ({
       ...init,
     }),
-  }, 
+  },
   init
 );
 

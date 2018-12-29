@@ -1,47 +1,68 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { View } from 'react-native';
-import { Surface, Divider, Subheading, Title, TouchableRipple } from 'react-native-paper';
-import { FontAwesome } from '@expo/vector-icons';
+import {
+  Surface,
+  Divider,
+  Subheading,
+  Title,
+  IconButton,
+} from 'react-native-paper';
 import { getDay, getMonth } from '../../utils/date';
+import Activity from './Activity';
 import Stats from './Stats';
+import theme from '../../config/theme';
 import styles from './styles';
 
-const iconMap = {
-  Fertilize: 'pagelines',
-  Mist: 'shower',
-  Propagate: 'code-fork',
-  Prune: 'cut',
-  Repot: 'shopping-basket',
-  Water: 'tint',
-};
-
 class TaskCard extends PureComponent {
+  onStats = () => {
+    const { task, statsPressed } = this.props;
+    statsPressed(task);
+  };
+
+  onActivity = () => {
+    const { task, activityPressed } = this.props;
+    activityPressed(task);
+  };
+
+  deletePressed = () => {
+    const { task, onRemove } = this.props;
+    onRemove(task.id);
+  };
 
   render() {
-    const { task, selected } = this.props;
+    const { task, editing, selected } = this.props;
     const day = getDay(task.date);
     const month = getMonth(task.date);
 
     return (
       <Surface style={styles.task}>
-        <View style={{ justifyContent: 'center', alignItems: 'center', padding: 16, borderTopLeftRadius: 3, borderBottomLeftRadius: 3 }}>
-          <Title>{day}</Title>
-          <Subheading>{month}</Subheading>
-        </View>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Stats 
+        {!editing && (
+          <View style={styles.left}>
+            <Title style={styles.dateText}>{day}</Title>
+            <Subheading style={styles.dateText}>{month}</Subheading>
+          </View>
+        )}
+        {editing && (
+          <View style={styles.left}>
+            <IconButton
+              icon="delete"
+              color={selected ? theme.colors.red : theme.colors.orange}
+              size={24}
+              onPress={this.deletePressed}
+            />
+          </View>
+        )}
+        <View style={styles.right}>
+          <Stats
             height={task.height}
             length={task.length}
             width={task.width}
             temp={task.temp}
+            onPress={this.onStats}
           />
           <Divider style={{ width: '100%' }} />
-            <TouchableRipple style={{ flex: 1 }}>
-              <View style={{ flex: 1, width: '100%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 32, height: 48 }}>
-                {task.activity.map(item => <FontAwesome key={item} color="black" name={iconMap[item]} size={24} />)}
-              </View>
-            </TouchableRipple>
+          <Activity activity={task.activity} onPress={this.onActivity} />
         </View>
       </Surface>
     );
@@ -49,8 +70,12 @@ class TaskCard extends PureComponent {
 }
 
 TaskCard.propTypes = {
+  task: PropTypes.object.isRequired,
+  editing: PropTypes.bool.isRequired,
+  selected: PropTypes.bool.isRequired,
+  activityPressed: PropTypes.func.isRequired,
+  statsPressed: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired,
 };
-
-TaskCard.defaultProps = {};
 
 export default TaskCard;

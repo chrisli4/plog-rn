@@ -1,6 +1,6 @@
 export default {
   '123': {
-    allIds: ['1', '2', '3', '4', '5'],
+    allIds: ['1', '2', '3', '4'],
     byId: {
       '1': {
         id: '1',
@@ -27,18 +27,10 @@ export default {
         uri: 'https://via.placeholder.com/150x150',
         comment: 'hello, world3!',
       },
-      '5': {
-        id: '5',
-        date: '2018-12-05',
-        uri: 'https://via.placeholder.com/150x150',
-        comment: 'hello, world5!',
-      },
     },
-    deleteIds: [],
   },
   '124': {
     allIds: [],
-    deleteIds: [],
     byId: {},
   },
 };

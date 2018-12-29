@@ -2,12 +2,20 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FAB, Portal } from 'react-native-paper';
-import { makeGetScreen, makeGetRemoveStatus, makeGetSelected } from './selectors';
-import { openModalCalendar, openModalTask } from '../../actions/modals';
+import {
+  makeGetScreen,
+  makeGetRemoveStatus,
+  makeGetSelected,
+} from './selectors';
+import {
+  openModalCalendar,
+  openModalTask,
+  openModalChart,
+} from '../../actions/modals';
 import { enableRemove, disableRemove } from '../../actions/remove';
 import { addPlant } from '../../actions/plants';
 import { addPhoto } from '../../actions/photos';
-import { addTask } from '../../actions/tasks';
+import theme from '../../config/theme';
 
 class FabGroup extends PureComponent {
   state = {
@@ -15,7 +23,14 @@ class FabGroup extends PureComponent {
   };
 
   addPressed = () => {
-    const { screen, selected, addPhoto, addPlant, openModalTask } = this.props;
+    const {
+      screen,
+      selected,
+      addPhoto,
+      addPlant,
+      openModalTask,
+      openModalChart,
+    } = this.props;
     if (screen === 'Home') {
       addPlant();
     }
@@ -25,7 +40,10 @@ class FabGroup extends PureComponent {
     if (screen === 'Records') {
       openModalTask();
     }
-  }
+    if (screen === 'Charts') {
+      openModalChart();
+    }
+  };
 
   toggleRemove = () => {
     const { editing, enableRemove, disableRemove } = this.props;
@@ -38,16 +56,35 @@ class FabGroup extends PureComponent {
 
   render() {
     const { open } = this.state;
-    const { editing, screen } = this.props;
+    const { editing, screen, openModalCalendar } = this.props;
     return (
       <Portal>
         <FAB.Group
           open={open}
+          color={theme.colors.white}
+          theme={{ colors: { accent: theme.colors.primary } }}
           icon={open ? 'clear' : 'add'}
           actions={[
-            { icon: 'delete-sweep', onPress: this.toggleRemove, color: editing ? 'green' : 'gray' },
-            { icon: 'filter-list', onPress: openModalCalendar, color: 'green' },
-            { icon: (screen === 'Records' ? 'playlist-add' : 'photo-camera'), onPress: this.addPressed, color: 'green' },
+            {
+              icon: 'edit',
+              onPress: this.toggleRemove,
+              color: editing ? theme.colors.primary : theme.colors.gray,
+            },
+            {
+              icon: 'filter-list',
+              onPress: openModalCalendar,
+              color: theme.colors.primary,
+            },
+            {
+              icon:
+                screen === 'Records'
+                  ? 'playlist-add'
+                  : screen === 'Charts'
+                  ? 'show-chart'
+                  : 'photo-camera',
+              onPress: this.addPressed,
+              color: theme.colors.primary,
+            },
           ]}
           onStateChange={({ open }) => this.setState({ open })}
         />
@@ -71,9 +108,9 @@ const makeMapStateToProps = () => {
 const mapDispatchToProps = {
   addPlant,
   addPhoto,
-  addTask,
   openModalCalendar,
   openModalTask,
+  openModalChart,
   enableRemove,
   disableRemove,
 };
@@ -84,11 +121,14 @@ FabGroup.propTypes = {
   selected: PropTypes.object.isRequired,
   addPlant: PropTypes.func.isRequired,
   addPhoto: PropTypes.func.isRequired,
-  addTask: PropTypes.func.isRequired,
+  openModalChart: PropTypes.func.isRequired,
   openModalCalendar: PropTypes.func.isRequired,
   openModalTask: PropTypes.func.isRequired,
   enableRemove: PropTypes.func.isRequired,
   disableRemove: PropTypes.func.isRequired,
 };
 
-export default connect(makeMapStateToProps, mapDispatchToProps)(FabGroup);
+export default connect(
+  makeMapStateToProps,
+  mapDispatchToProps
+)(FabGroup);

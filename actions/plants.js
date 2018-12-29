@@ -1,5 +1,5 @@
-import { createAction } from "redux-actions";
-import * as types from "../constants/plants";
+import { createAction } from 'redux-actions';
+import * as types from '../constants/plants';
 
 export const selectPlant = createAction(types.PLANT_SELECT, plant => ({
   plant,

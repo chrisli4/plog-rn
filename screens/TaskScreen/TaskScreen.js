@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FlatList, View } from 'react-native';
+import { FlatList } from 'react-native';
+import { Screen } from '../../components/Container';
+import { Modal } from '../../components/Modal';
 import { TaskCard } from '../../components/Card';
-import { makeGetVisibleTasks, makeGetDeleteIds, makeGetSelected } from './selectors';
+import { DeleteButton } from '../../components/Button';
+import { TaskForm, ActivityForm } from '../../components/Form';
+import {
+  makeGetVisibleTasks,
+  makeGetDeleteIds,
+  makeGetSelected,
+  makeGetRemoveStatus,
+} from './selectors';
 import { deleteTask, editTask } from '../../actions/tasks';
 import { addRemoveTask, deleteRemoveTask } from '../../actions/remove';
 
@@ -13,47 +22,10 @@ class Tasks extends Component {
     visible: {
       activity: false,
       stats: false,
-      chart: false,
-    },
-    show: {
-      height: false,
-      temp: false,
-      area: false,
     },
   };
 
-  onOpenChart = () => {
-    this.setState(state => ({
-      ...state,
-      visible: {
-        ...state.visible,
-        chart: true,
-      },
-    }));
-  };
-
-  onToggle = value => {
-    this.setState(state => ({
-      ...state,
-      show: {
-        ...state.show,
-        [value]: !state.show[value],
-      },
-    }));
-  };
-
-  onOpenStats = task => {
-    this.setState(state => ({
-      ...state,
-      task,
-      visible: {
-        ...state.visible,
-        stats: true,
-      },
-    }));
-  };
-
-  onOpenActivity = task => {
+  onActivityPress = task => {
     this.setState(state => ({
       ...state,
       task,
@@ -64,14 +36,25 @@ class Tasks extends Component {
     }));
   };
 
-  onClose = () => {
+  onStatsPress = task => {
+    this.setState(state => ({
+      ...state,
+      task,
+      visible: {
+        ...state.visible,
+        stats: true,
+      },
+    }));
+  };
+
+  onDismiss = () => {
     this.setState(state => ({
       ...state,
       task: {},
       visible: {
         activity: false,
         stats: false,
-        chart: false,
+        add: false,
       },
     }));
   };
@@ -84,7 +67,6 @@ class Tasks extends Component {
       visible: {
         activity: false,
         stats: false,
-        chart: false,
       },
     }));
     editTask(selected.id, task);
@@ -97,25 +79,53 @@ class Tasks extends Component {
     } else {
       addRemoveTask(id);
     }
-  }
+  };
+
+  onDelete = () => {
+    const { selected, deleteTask } = this.props;
+    deleteTask(selected.id);
+  };
 
   render() {
-    const { task, show, visible } = this.state;
-    const { tasks, deleteIds } = this.props;
-
+    const { task, visible } = this.state;
+    const { tasks, editing, deleteIds } = this.props;
     return (
-      <View>
+      <Screen>
         <FlatList
           data={tasks}
           extraData={this.props}
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
-            <TaskCard task={item} />
+            <TaskCard
+              task={item}
+              editing={editing}
+              selected={deleteIds.indexOf(item.id) > -1}
+              activityPressed={this.onActivityPress}
+              statsPressed={this.onStatsPress}
+              onRemove={this.onRemove}
+            />
           )}
           showsVerticalScrollIndicator={false}
         />
-
-      </View>
+        <Modal visible={visible.stats} onDismiss={this.onDismiss}>
+          <TaskForm
+            task={task}
+            title="Edit Record"
+            onAction={this.onEdit}
+            onDismiss={this.onDismiss}
+          />
+        </Modal>
+        <Modal visible={visible.activity} onDismiss={this.onDismiss}>
+          <ActivityForm
+            task={task}
+            onAction={this.onEdit}
+            onDismiss={this.onDismiss}
+          />
+        </Modal>
+        {editing && deleteIds.length > 0 && (
+          <DeleteButton onPress={this.onDelete} />
+        )}
+      </Screen>
     );
   }
 }
@@ -124,10 +134,12 @@ const makeMapStateToProps = () => {
   const getVisibleTasks = makeGetVisibleTasks();
   const getSelected = makeGetSelected();
   const getDeleteIds = makeGetDeleteIds();
+  const getRemoveStatus = makeGetRemoveStatus();
   const mapStateToProps = state => ({
     tasks: getVisibleTasks(state),
     deleteIds: getDeleteIds(state),
     selected: getSelected(state),
+    editing: getRemoveStatus(state),
   });
   return mapStateToProps;
 };
@@ -141,13 +153,13 @@ const mapDispatchToProps = {
 
 Tasks.propTypes = {
   tasks: PropTypes.array.isRequired,
+  editing: PropTypes.bool.isRequired,
   selected: PropTypes.object.isRequired,
   deleteIds: PropTypes.array.isRequired,
   addRemoveTask: PropTypes.func.isRequired,
   deleteTask: PropTypes.func.isRequired,
   deleteRemoveTask: PropTypes.func.isRequired,
   editTask: PropTypes.func.isRequired,
-  navigation: PropTypes.object.isRequired,
 };
 
 export default connect(

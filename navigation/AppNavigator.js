@@ -1,6 +1,6 @@
-import { createAppContainer, createSwitchNavigator } from "react-navigation";
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
-import MainStackNavigator from "./MainStackNavigator";
+import MainStackNavigator from './MainStackNavigator';
 
 const SwitchNavigator = createSwitchNavigator({
   // You could add another route here for authentication.

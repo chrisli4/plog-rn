@@ -1,4 +1,5 @@
 export const addId = (state, id) => [id, ...state.slice(0)];
+
 const deleteIds = (state, ids) => state.filter(i => ids.indexOf(i) === -1);
 export const deleteId = (state, id) => deleteIds(state, [id]);
 

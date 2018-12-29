@@ -1,8 +1,15 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { View } from 'react-native';
-import { Card, Title, Paragraph, IconButton, TouchableRipple } from 'react-native-paper';
+import {
+  Card,
+  Title,
+  Subheading,
+  IconButton,
+  TouchableRipple,
+} from 'react-native-paper';
 import { format } from '../../utils/date';
+import theme from '../../config/theme';
 import styles from './styles';
 
 class PlantCard extends PureComponent {
@@ -22,30 +29,51 @@ class PlantCard extends PureComponent {
   };
 
   render() {
-    const { plant, editing } = this.props;
+    const { plant, selected, editing } = this.props;
     const formatted = format(plant.date);
     return (
-  <Card style={styles.card}>
-  <TouchableRipple onPress={this.navPressed} disabled={editing}>
-    <Card.Cover style={{ borderTopRightRadius: 3, borderTopLeftRadius: 3 }} source={{ uri: 'https://picsum.photos/700' }} />
-  </TouchableRipple>
-    <Card.Content style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 8 }}>
-      <View>
-        <Title>{plant.name}</Title>
-        <Paragraph>{formatted}</Paragraph>
-      </View>
-      <View style={{ flexDirection: 'row' }}>
-        <IconButton icon="edit" color={ editing ? "black" : "transparent"} disabled={!editing} onPress={this.editPressed} />
-        <IconButton icon="delete" color={ editing ? "black" : "transparent"} disabled={!editing} onPress={this.deletePressed} />
-      </View>
-    </Card.Content>
-  </Card>
+      <Card style={styles.card}>
+        <TouchableRipple onPress={this.navPressed} disabled={editing}>
+          <Card.Cover
+            style={{ borderTopRightRadius: 7, borderTopLeftRadius: 7 }}
+            source={{ uri: 'https://picsum.photos/700' }}
+          />
+        </TouchableRipple>
+        <Card.Content
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginTop: 8,
+          }}
+        >
+          <View>
+            <Title style={styles.text}>{plant.name}</Title>
+            <Subheading style={styles.text}>{formatted}</Subheading>
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <IconButton
+              icon="edit"
+              color={editing ? theme.colors.white : 'transparent'}
+              disabled={!editing}
+              onPress={this.editPressed}
+            />
+            <IconButton
+              icon="delete"
+              color={!editing ? 'transparent' : selected ? theme.colors.red : theme.colors.white}
+              disabled={!editing}
+              onPress={this.deletePressed}
+            />
+          </View>
+        </Card.Content>
+      </Card>
     );
   }
 }
 
 PlantCard.propTypes = {
   plant: PropTypes.object.isRequired,
+  selected: PropTypes.bool.isRequired,
   editing: PropTypes.bool.isRequired,
   onRemove: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,

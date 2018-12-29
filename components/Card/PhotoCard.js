@@ -1,10 +1,16 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { View } from 'react-native';
-import moment from 'moment';
-import { Card, IconButton } from 'react-native-paper';
+import { View, ImageBackground } from 'react-native';
+import { IconButton, TouchableRipple } from 'react-native-paper';
+import { Row } from '../Container';
+import styles from './styles';
 
 class PhotoCard extends PureComponent {
+  viewPressed = () => {
+    const { index, onView } = this.props;
+    onView(index);
+  };
+
   editPressed = () => {
     const { photo, onEdit } = this.props;
     onEdit(photo);
@@ -16,25 +22,47 @@ class PhotoCard extends PureComponent {
   };
 
   render() {
-    const { photo } = this.props;
-    const formatted = moment(photo.date, 'YYYY-MM-DD').format('MMMM D, YYYY');
+    const { photo, editing, selected } = this.props;
     return (
-      <Card>
-        <View>
-          <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
-            <IconButton icon="edit" color="white" onPress={this.editPressed} />
-            <IconButton icon="delete" color="white" onPress={this.deletePressed} />
-        </View>
-      </Card>
+      <View style={photo.empty ? styles.placeholder : styles.photo}>
+        {!photo.empty && (
+          <TouchableRipple disabled={editing} onPress={this.viewPressed}>
+            <ImageBackground
+              style={styles.image}
+              source={{ uri: 'https://picsum.photos/700' }}
+            >
+              {editing ? (
+                <Row>
+                  <IconButton
+                    icon="edit"
+                    color="white"
+                    size={24}
+                    onPress={this.editPressed}
+                  />
+                  <IconButton
+                    icon="delete"
+                    color={selected ? 'red' : 'white'}
+                    size={24}
+                    onPress={this.deletePressed}
+                  />
+                </Row>
+              ) : null}
+            </ImageBackground>
+          </TouchableRipple>
+        )}
+      </View>
     );
   }
 }
 
 PhotoCard.propTypes = {
   photo: PropTypes.object.isRequired,
+  editing: PropTypes.bool.isRequired,
+  index: PropTypes.number.isRequired,
+  selected: PropTypes.bool.isRequired,
   onRemove: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
-  onNavigate: PropTypes.func.isRequired,
+  onView: PropTypes.func.isRequired,
 };
 
 export default PhotoCard;

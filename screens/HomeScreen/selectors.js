@@ -6,7 +6,7 @@ const getFilter = state => state.filter;
 const getDeleteIds = state => state.remove.plants;
 const getRemoveStatus = state => state.remove.enabled;
 
-export const makeGetDeleteIds = () => 
+export const makeGetDeleteIds = () =>
   createSelector(
     [getDeleteIds],
     ids => ids
