@@ -1,9 +1,8 @@
 import { handleActions } from 'redux-actions';
 import * as types from '../constants/photos';
 import { addItem, deleteItems, editItem, deleteProps } from '../utils/reducers';
-import initData from '../data/photo';
 
-const init = initData;
+const init = {};
 
 const reducer = handleActions(
   {

@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "plog-rn",
+    "name": "Plog",
     "slug": "plog-rn",
     "privacy": "public",
     "sdkVersion": "31.0.0",
@@ -10,11 +10,11 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#1EB980"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -23,7 +23,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.chrisli4.plog"
+    },
+    "android": {
+      "package": "com.chrisli4.plog"
     }
   }
 }

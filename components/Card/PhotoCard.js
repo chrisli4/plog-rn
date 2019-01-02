@@ -29,7 +29,7 @@ class PhotoCard extends PureComponent {
           <TouchableRipple disabled={editing} onPress={this.viewPressed}>
             <ImageBackground
               style={styles.image}
-              source={{ uri: 'https://picsum.photos/700' }}
+              source={{ uri: photo.uri }}
             >
               {editing ? (
                 <Row>
