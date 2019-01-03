@@ -19,9 +19,13 @@ Build the application locally using the below instructions, Apple only allows di
 
 ## User Guide
 
-### Home
-* Create a new plant project by tapping on the action button then the camera button. Take a picture of your plant.
-* 
+The action button in the lower right hand corner allows you to perform most actions.
+* Camera button - allows you to create a new plant in the Home page or add a photo entry to an existing plant in the Photos tab.
+* Filter button - filters all items based on the specified range.
+* Chart button - allows you to hide/show different charts.
+* Edit button - toggles edit mode, when enabled allows you to delete and modify items.
+
+Items in the records tab can be editted by tapping on them.
 
 
 ## Getting Started
