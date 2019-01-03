@@ -6,7 +6,7 @@ A react-native app used to track and monitor plant growth.
 Android
 Install the standalone application using the APK link below:
 ```
-
+https://expo.io/artifacts/9bf50336-29a7-46c7-8888-ffdeb2476e1d
 ```
 
 Install using the mobile Expo client using the link below:
