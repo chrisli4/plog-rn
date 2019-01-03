@@ -12,6 +12,7 @@ const middleware = [sagaMiddleware];
 const persistConfig = {
   key: 'root',
   storage,
+  blacklist: ['navigation', 'screen', 'remove', 'modals'],
 };
 
 const persistReducer = persistCombineReducers(persistConfig, reducer);
@@ -23,7 +24,6 @@ const configureStore = () => {
   );
   sagaMiddleware.run(rootSaga);
   const persistor = persistStore(store);
-  persistor.purge();
   return { persistor, store };
 };
 

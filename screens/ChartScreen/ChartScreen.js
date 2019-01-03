@@ -7,7 +7,11 @@ import { Modal } from '../../components/Modal';
 import { Chart, ListItem } from '../../components/Chart';
 import { Button } from '../../components/Button';
 import { Title } from '../../components/Title';
-import { makeGetVisibleTasks, makeGetChartVisible } from './selectors';
+import {
+  makeGetVisibleTasks,
+  makeGetChartVisible,
+  makeGetFilter,
+} from './selectors';
 import { getHeight, getArea, getTemp } from '../../utils/data';
 import { closeModalChart } from '../../actions/modals';
 
@@ -31,7 +35,7 @@ class Charts extends Component {
   };
 
   render() {
-    const { tasks, chartVisible, closeModalChart } = this.props;
+    const { tasks, chartVisible, closeModalChart, filter } = this.props;
     const { show } = this.state;
     return (
       <Screen>
@@ -40,6 +44,8 @@ class Charts extends Component {
           dataTemp={getTemp(tasks)}
           dataArea={getArea(tasks)}
           show={show}
+          minDate={new Date(filter.start)}
+          maxDate={new Date(filter.end)}
         />
         <Modal visible={chartVisible} onDismiss={closeModalChart}>
           <Surface style={{ borderRadius: 7, marginHorizontal: 16 }}>
@@ -76,8 +82,10 @@ class Charts extends Component {
 const makeMapStateToProps = () => {
   const getVisibleTasks = makeGetVisibleTasks();
   const getChartVisible = makeGetChartVisible();
+  const getFilter = makeGetFilter();
   const mapStateToProps = state => ({
     tasks: getVisibleTasks(state),
+    filter: getFilter(state),
     chartVisible: getChartVisible(state),
   });
   return mapStateToProps;
@@ -89,6 +97,7 @@ const mapDispatchToProps = {
 
 Charts.propTypes = {
   tasks: PropTypes.array.isRequired,
+  filter: PropTypes.object.isRequired,
   chartVisible: PropTypes.bool.isRequired,
   closeModalChart: PropTypes.func.isRequired,
 };

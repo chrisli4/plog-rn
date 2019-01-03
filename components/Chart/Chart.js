@@ -10,8 +10,12 @@ import {
 } from 'victory-native';
 import theme from '../../config/theme';
 
-const Chart = ({ dataHeight, dataArea, dataTemp, show }) => (
-  <VictoryChart height={400} scale={{ x: 'time' }}>
+const Chart = ({ dataHeight, dataArea, dataTemp, show, minDate, maxDate }) => (
+  <VictoryChart
+    height={400}
+    scale={{ x: 'time', y: 'linear' }}
+    domain={{ x: [minDate, maxDate] }}
+  >
     <VictoryLegend
       centerTitle
       x={50}
@@ -30,42 +34,30 @@ const Chart = ({ dataHeight, dataArea, dataTemp, show }) => (
         data: { strokeWidth: 3, fillOpacity: 0.4 },
       }}
     >
-      {show.height ? (
+      {show.height && (
         <VictoryArea
           style={{
             data: { fill: theme.colors.blue, stroke: theme.colors.blue },
           }}
-          data={[
-            { y: 2, x: new Date('2018-12-1') },
-            { y: 3, x: new Date('2018-12-2') },
-            { y: 4, x: new Date('2018-12-3') },
-          ]}
+          data={dataHeight}
         />
-      ) : null}
-      {show.area ? (
+      )}
+      {show.area && (
         <VictoryArea
           style={{
             data: { fill: theme.colors.primary, stroke: theme.colors.primary },
           }}
-          data={[
-            { y: 2, x: new Date('2018-12-1') },
-            { y: 3, x: new Date('2018-12-2') },
-            { y: 4, x: new Date('2018-12-3') },
-          ]}
+          data={dataArea}
         />
-      ) : null}
-      {show.temp ? (
+      )}
+      {show.temp && (
         <VictoryArea
           style={{
             data: { fill: theme.colors.orange, stroke: theme.colors.orange },
           }}
-          data={[
-            { y: 2, x: new Date('2018-12-1') },
-            { y: 3, x: new Date('2018-12-2') },
-            { y: 4, x: new Date('2018-12-3') },
-          ]}
+          data={dataTemp}
         />
-      ) : null}
+      )}
     </VictoryGroup>
   </VictoryChart>
 );
@@ -75,6 +67,8 @@ Chart.propTypes = {
   dataArea: PropTypes.array.isRequired,
   dataTemp: PropTypes.array.isRequired,
   show: PropTypes.object.isRequired,
+  minDate: PropTypes.object.isRequired,
+  maxDate: PropTypes.object.isRequired,
 };
 
 export default Chart;
