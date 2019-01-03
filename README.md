@@ -1,13 +1,32 @@
 # Plog
 A react-native app used to track and monitor plant growth.
 
-How to use
+#### How to Use
 
+Android
+Install the standalone application using the APK link below:
+```
+
+```
+
+Install using the mobile Expo client using the link below:
+```
+https://expo.io/@chrisli41/plog-rn
+```
+
+iOS
+Build the application locally using the below instructions, Apple only allows distribution of applications through the Apple Store (which costs a yearly subscription).
+
+## User Guide
+
+### Home
+* Create a new plant project by tapping on the action button then the camera button. Take a picture of your plant.
+* 
 
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
 
