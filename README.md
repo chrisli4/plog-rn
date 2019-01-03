@@ -57,19 +57,19 @@ Run using Xcode or Android simulator, your preference
 
 ## Built With
 
-expo - RN framework containing various services, this application primarily uses the FileSystem and Camera utilities.
-formik - Form input validation
-react-navigation - Handles navigation within the application.
-react-native-paper - Material UI framework.
-react-redux - State-management of the entire application.
-redux-saga - Perform asynchronous actions such as taking a picture.
-redux-persist - Save user data between sessions.
-victory-native - Charting user submitted data.
+* expo - RN framework containing various services, this application primarily uses the FileSystem and Camera utilities.
+* formik - Form input validation
+* react-navigation - Handles navigation within the application.
+* react-native-paper - Material UI framework.
+* react-redux - State-management of the entire application.
+* redux-saga - Perform asynchronous actions such as taking a picture.
+* redux-persist - Save user data between sessions.
+* victory-native - Charting user submitted data.
 
 ### Components Used
 
-react-native-calendars - Calendar component for selecting dates.
-react-native-image-view - Image view used in photo album.
+* react-native-calendars - Calendar component for selecting dates.
+* react-native-image-view - Image view used in photo album.
 
 ## Authors
 
