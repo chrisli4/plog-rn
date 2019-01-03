@@ -30,30 +30,30 @@ const Chart = ({ dataHeight, dataArea, dataTemp, show }) => (
         data: { strokeWidth: 3, fillOpacity: 0.4 },
       }}
     >
-      {show.height && (
+      {show.height ? (
         <VictoryArea
           style={{
             data: { fill: theme.colors.blue, stroke: theme.colors.blue },
           }}
           data={dataHeight}
         />
-      )}
-      {show.area && (
+      ) : null}
+      {show.area ? (
         <VictoryArea
           style={{
             data: { fill: theme.colors.primary, stroke: theme.colors.primary },
           }}
           data={dataArea}
         />
-      )}
-      {show.temp && (
+      ) : null}
+      {show.temp ? (
         <VictoryArea
           style={{
             data: { fill: theme.colors.orange, stroke: theme.colors.orange },
           }}
           data={dataTemp}
         />
-      )}
+      ) : null}
     </VictoryGroup>
   </VictoryChart>
 );

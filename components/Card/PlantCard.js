@@ -60,7 +60,13 @@ class PlantCard extends PureComponent {
             />
             <IconButton
               icon="delete"
-              color={!editing ? 'transparent' : selected ? theme.colors.red : theme.colors.white}
+              color={
+                !editing
+                  ? 'transparent'
+                  : selected
+                  ? theme.colors.red
+                  : theme.colors.white
+              }
               disabled={!editing}
               onPress={this.deletePressed}
             />

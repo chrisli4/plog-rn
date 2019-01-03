@@ -54,7 +54,7 @@ function* addPhotoSaga(action) {
       if (!result.cancelled) {
         const { pid } = action.payload;
         const id = shortid.generate();
-        const uri = `${path}/2.png`;
+        const uri = `${path}/${id}.png`;
         yield call([FileSystem, 'copyAsync'], { from: result.uri, to: uri });
         yield put(
           addPhotoSuccess(pid, {

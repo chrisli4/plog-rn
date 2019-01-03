@@ -27,7 +27,12 @@
       "bundleIdentifier": "com.chrisli4.plog"
     },
     "android": {
-      "package": "com.chrisli4.plog"
+      "package": "com.chrisli4.plog",
+      "permissions": [
+        "WRITE_EXTERNAL_STORAGE",
+        "READ_EXTERNAL_STORAGE",
+        "CAMERA",
+      ]
     }
   }
 }
