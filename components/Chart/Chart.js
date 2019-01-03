@@ -35,7 +35,11 @@ const Chart = ({ dataHeight, dataArea, dataTemp, show }) => (
           style={{
             data: { fill: theme.colors.blue, stroke: theme.colors.blue },
           }}
-          data={dataHeight}
+          data={[
+            { y: 2, x: new Date('2018-12-1') },
+            { y: 3, x: new Date('2018-12-2') },
+            { y: 4, x: new Date('2018-12-3') },
+          ]}
         />
       ) : null}
       {show.area ? (
@@ -43,7 +47,11 @@ const Chart = ({ dataHeight, dataArea, dataTemp, show }) => (
           style={{
             data: { fill: theme.colors.primary, stroke: theme.colors.primary },
           }}
-          data={dataArea}
+          data={[
+            { y: 2, x: new Date('2018-12-1') },
+            { y: 3, x: new Date('2018-12-2') },
+            { y: 4, x: new Date('2018-12-3') },
+          ]}
         />
       ) : null}
       {show.temp ? (
@@ -51,7 +59,11 @@ const Chart = ({ dataHeight, dataArea, dataTemp, show }) => (
           style={{
             data: { fill: theme.colors.orange, stroke: theme.colors.orange },
           }}
-          data={dataTemp}
+          data={[
+            { y: 2, x: new Date('2018-12-1') },
+            { y: 3, x: new Date('2018-12-2') },
+            { y: 4, x: new Date('2018-12-3') },
+          ]}
         />
       ) : null}
     </VictoryGroup>
