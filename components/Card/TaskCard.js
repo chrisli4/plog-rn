@@ -37,13 +37,13 @@ class TaskCard extends PureComponent {
 
     return (
       <Surface style={styles.task}>
-        {!editing && (
+        {!editing ? (
           <View style={styles.left}>
             <Title style={styles.dateText}>{day}</Title>
             <Subheading style={styles.dateText}>{month}</Subheading>
           </View>
-        )}
-        {editing && (
+        ) : null}
+        {editing ? (
           <View style={styles.left}>
             <IconButton
               icon="delete"
@@ -52,7 +52,7 @@ class TaskCard extends PureComponent {
               onPress={this.deletePressed}
             />
           </View>
-        )}
+        ) : null}
         <View style={styles.right}>
           <Stats
             height={task.height}

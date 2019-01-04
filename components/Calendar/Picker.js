@@ -26,7 +26,11 @@ class Picker extends Component {
         markedDates
       );
       if (range >= 0) {
-        this.setState({ isFromDatePicked: true, isToDatePicked: true, markedDates: mMarkedDates });
+        this.setState({
+          isFromDatePicked: true,
+          isToDatePicked: true,
+          markedDates: mMarkedDates,
+        });
         this.props.onSuccess(this.state.fromDate, day.dateString);
       } else {
         this.setupStartMarker(day);
@@ -93,7 +97,11 @@ class Picker extends Component {
         textColor: this.props.markTextColor,
       },
     };
-    const [mMarkedDates, range] = this.setupMarkedDates(fromDate, toDate, markedDates);
+    const [mMarkedDates, range] = this.setupMarkedDates(
+      fromDate,
+      toDate,
+      markedDates
+    );
     this.setState({ markedDates: mMarkedDates, fromDate });
   };
 

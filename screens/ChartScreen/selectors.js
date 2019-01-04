@@ -12,6 +12,12 @@ export const makeGetSelected = () =>
     selected => selected
   );
 
+export const makeGetFilter = () =>
+  createSelector(
+    [getFilter],
+    filter => filter
+  );
+
 export const makeGetVisibleTasks = () =>
   createSelector(
     [getTasks, getFilter],

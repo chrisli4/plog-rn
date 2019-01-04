@@ -1,9 +1,8 @@
 import { handleActions } from 'redux-actions';
 import * as types from '../constants/tasks';
 import { addItem, deleteItems, editItem, deleteProps } from '../utils/reducers';
-import initData from '../data/task';
 
-const init = initData;
+const init = {};
 
 const reducer = handleActions(
   {

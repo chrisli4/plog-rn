@@ -25,12 +25,9 @@ class PhotoCard extends PureComponent {
     const { photo, editing, selected } = this.props;
     return (
       <View style={photo.empty ? styles.placeholder : styles.photo}>
-        {!photo.empty && (
+        {!photo.empty ? (
           <TouchableRipple disabled={editing} onPress={this.viewPressed}>
-            <ImageBackground
-              style={styles.image}
-              source={{ uri: 'https://picsum.photos/700' }}
-            >
+            <ImageBackground style={styles.image} source={{ uri: photo.uri }}>
               {editing ? (
                 <Row>
                   <IconButton
@@ -49,7 +46,7 @@ class PhotoCard extends PureComponent {
               ) : null}
             </ImageBackground>
           </TouchableRipple>
-        )}
+        ) : null}
       </View>
     );
   }

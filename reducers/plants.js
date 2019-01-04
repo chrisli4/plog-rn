@@ -1,9 +1,15 @@
 import { handleActions } from 'redux-actions';
 import * as types from '../constants/plants';
 import { addItem, deleteItems, editItem } from '../utils/reducers';
-import initData from '../data/plant';
 
-const init = initData;
+const init = {
+  allIds: [],
+  byId: {},
+  selected: {
+    id: null,
+  },
+  error: {},
+};
 
 const reducer = handleActions(
   {

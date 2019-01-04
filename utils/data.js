@@ -9,9 +9,9 @@ export const getHeight = data => {
     });
   }
   return [
-    { y: 1, x: new Date('2018-12-1') },
-    { y: 2, x: new Date('2018-12-2') },
-    { y: 3, x: new Date('2018-12-3') },
+    { x: new Date('2018-12-01'), y: 0 },
+    { x: new Date('2018-12-02'), y: 0 },
+    { x: new Date('2018-12-03'), y: 0 },
   ];
 };
 
@@ -26,9 +26,9 @@ export const getTemp = data => {
     });
   }
   return [
-    { y: 2, x: new Date('2018-12-1') },
-    { y: 3, x: new Date('2018-12-2') },
-    { y: 4, x: new Date('2018-12-3') },
+    { x: new Date('2018-12-01'), y: 0 },
+    { x: new Date('2018-12-02'), y: 0 },
+    { x: new Date('2018-12-03'), y: 0 },
   ];
 };
 
@@ -45,8 +45,8 @@ export const getArea = data => {
     });
   }
   return [
-    { y: 4, x: new Date('2018-12-1') },
-    { y: 9, x: new Date('2018-12-2') },
-    { y: 16, x: new Date('2018-12-3') },
+    { x: new Date('2018-12-01'), y: 0 },
+    { x: new Date('2018-12-02'), y: 0 },
+    { x: new Date('2018-12-03'), y: 0 },
   ];
 };

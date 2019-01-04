@@ -10,8 +10,12 @@ import {
 } from 'victory-native';
 import theme from '../../config/theme';
 
-const Chart = ({ dataHeight, dataArea, dataTemp, show }) => (
-  <VictoryChart height={400} scale={{ x: 'time' }}>
+const Chart = ({ dataHeight, dataArea, dataTemp, show, minDate, maxDate }) => (
+  <VictoryChart
+    height={400}
+    scale={{ x: 'time', y: 'linear' }}
+    domain={{ x: [minDate, maxDate] }}
+  >
     <VictoryLegend
       centerTitle
       x={50}
@@ -63,6 +67,8 @@ Chart.propTypes = {
   dataArea: PropTypes.array.isRequired,
   dataTemp: PropTypes.array.isRequired,
   show: PropTypes.object.isRequired,
+  minDate: PropTypes.object.isRequired,
+  maxDate: PropTypes.object.isRequired,
 };
 
 export default Chart;

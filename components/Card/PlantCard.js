@@ -36,7 +36,7 @@ class PlantCard extends PureComponent {
         <TouchableRipple onPress={this.navPressed} disabled={editing}>
           <Card.Cover
             style={{ borderTopRightRadius: 7, borderTopLeftRadius: 7 }}
-            source={{ uri: 'https://picsum.photos/700' }}
+            source={{ uri: plant.uri }}
           />
         </TouchableRipple>
         <Card.Content
@@ -60,7 +60,13 @@ class PlantCard extends PureComponent {
             />
             <IconButton
               icon="delete"
-              color={!editing ? 'transparent' : selected ? theme.colors.red : theme.colors.white}
+              color={
+                !editing
+                  ? 'transparent'
+                  : selected
+                  ? theme.colors.red
+                  : theme.colors.white
+              }
               disabled={!editing}
               onPress={this.deletePressed}
             />
